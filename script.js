@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const startNewChat = () => {
         const currentChat = messages.innerHTML;
         if (currentChat.trim()) {
-            const timestamp = new Date().toLocaleString();
+            const chatName = `Chat ${chatHistory.length + 1}`;
             const historyItem = document.createElement('li');
-            historyItem.textContent = `Chat started on ${timestamp}`;
+            historyItem.textContent = chatName;
             historyItem.addEventListener('click', () => {
                 messages.innerHTML = currentChat;
             });
             historyList.appendChild(historyItem);
-            chatHistory.push({ timestamp, content: currentChat });
+            chatHistory.push({ name: chatName, content: currentChat });
         }
         messages.innerHTML = '';
     };
