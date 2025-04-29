@@ -3,13 +3,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
 
-    sendButton.addEventListener('click', () => {
+    const sendMessage = () => {
         const userMessage = userInput.value.trim();
         if (userMessage) {
             addMessage('user', userMessage);
             userInput.value = '';
             // Simulate AI response for now
             setTimeout(() => addMessage('ai', 'This is a simulated AI response.'), 1000);
+        }
+    };
+
+    sendButton.addEventListener('click', sendMessage);
+
+    userInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendMessage();
         }
     });
 
