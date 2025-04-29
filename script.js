@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const messages = document.getElementById('messages');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
+    const historyList = document.getElementById('history-list');
+
+    let chatHistory = [];
 
     const sendMessage = () => {
         const userMessage = userInput.value.trim();
@@ -13,6 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const startNewChat = () => {
+        const currentChat = messages.innerHTML;
+        if (currentChat.trim()) {
+            const timestamp = new Date().toLocaleString();
+            const historyItem = document.createElement('li');
+            historyItem.textContent = `Chat started on ${timestamp}`;
+            historyItem.addEventListener('click', () => {
+                messages.innerHTML = currentChat;
+            });
+            historyList.appendChild(historyItem);
+            chatHistory.push({ timestamp, content: currentChat });
+        }
+        messages.innerHTML = '';
+    };
+
     sendButton.addEventListener('click', sendMessage);
 
     userInput.addEventListener('keypress', (event) => {
@@ -20,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessage();
         }
     });
+
+    const newChatButton = document.createElement('button');
+    newChatButton.textContent = 'New Chat';
+    newChatButton.id = 'new-chat-button';
+    newChatButton.addEventListener('click', startNewChat);
+    document.getElementById('input-container').appendChild(newChatButton);
 
     function addMessage(sender, text) {
         const message = document.createElement('div');
